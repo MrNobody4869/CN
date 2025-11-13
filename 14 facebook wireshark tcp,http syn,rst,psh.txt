@@ -1,0 +1,162 @@
+pr 14 
+
+A
+
+
+open wireshark
+open cmd prompt
+ping facebook.com -4(windows)
+
+open ubuntu terminal
+ping -4 facebook.com 
+
+copy ip add
+paste on chrome
+login to facebook
+open wireshark 
+ress redd button
+search 
+tcp && ip.addr == " id got in terminal"
+ 
+now count tcp packets!
+
+
+for http packets:
+search 
+http && ip.addr == " id got in terminal "
+count http packets!
+
+
+B
+
+search 
+tcp.flags.syn ==1
+tcp.flags.push ==1
+tcp.flags.reset ==1
+
+
+/////////////////
+Assignment No: 8  
+Title: Capture TCP and HTTP Packets using Wireshark  
+
+• Problem Statement:
+  – Capture TCP and HTTP packets using Wireshark and analyze them to understand how these protocols work.
+  – Save and analyze the output to observe connection establishment, data transfer, and termination processes.
+
+• Aim:
+  – To study and capture TCP and HTTP packets during communication with a web server.
+  – To understand TCP and HTTP behavior, flags, and packet flow using the Wireshark tool.
+
+• Tools Used:
+  – Wireshark Network Protocol Analyzer
+
+• Concept Description:
+
+  1. **Wireshark Overview:**
+     – Wireshark is a free and open-source network packet analyzer.
+     – It captures live network traffic and displays it in real time.
+     – It helps in analyzing data packets exchanged between client and server.
+     – Each packet includes source IP, destination IP, protocol used, packet length, and detailed protocol information.
+
+  2. **HTTP (Hypertext Transfer Protocol):**
+     – HTTP is an application-layer protocol used for communication on the World Wide Web.
+     – It is stateless and based on the request-response model.
+     – The client (browser) sends an HTTP request to the web server, and the server responds with the requested web page or data.
+     – Default port: **80**
+     – It uses TCP as the transport layer protocol.
+
+     **HTTP Request Format:**
+     – Request Line (Method, URL, HTTP Version)
+     – Header Fields
+     – Empty Line
+     – Optional Message Body
+
+     **HTTP Response Format:**
+     – Status Line (Status Code, Message)
+     – Header Fields
+     – Blank Line
+     – Optional Message Body (HTML, image, etc.)
+
+  3. **TCP (Transmission Control Protocol):**
+     – TCP is a connection-oriented, reliable transport layer protocol.
+     – It ensures ordered delivery of data with acknowledgment and retransmission in case of errors.
+     – TCP operates on port numbers (e.g., HTTP uses TCP port 80).
+
+     **Key TCP Features:**
+     – **Connection-oriented:** Uses a three-way handshake.
+     – **Reliable:** Guarantees packet delivery.
+     – **Flow Control:** Manages data transmission rate.
+     – **Error Control:** Retransmits lost/corrupted data.
+
+     **Three-Way Handshake Steps:**
+     1. SYN → Client requests connection to server.
+     2. SYN+ACK → Server acknowledges and agrees to connect.
+     3. ACK → Client confirms and communication begins.
+
+  4. **TCP Packet Flags:**
+     – TCP header includes several control flags that indicate the purpose of the packet:
+       • **SYN:** Connection establishment.
+       • **ACK:** Acknowledgment of received data.
+       • **PSH:** Push data immediately to the application.
+       • **RST:** Reset connection.
+       • **FIN:** Terminate connection.
+       • **URG:** Urgent data flag.
+
+  5. **Display Filters Used in Wireshark:**
+     – To isolate specific packets, Wireshark supports filters.  
+       Examples used in this practical:
+       ```
+       tcp
+       http
+       tcp.flags.syn == 1
+       tcp.flags.push == 1
+       tcp.flags.reset == 1
+       tcp && ip.addr == <website_IP>
+       http && ip.addr == <website_IP>
+       ```
+       **Explanation:**
+       - `tcp`: Displays all TCP packets.
+       - `http`: Displays only HTTP packets.
+       - `tcp.flags.syn == 1`: Shows packets used for connection setup (SYN flag).
+       - `tcp.flags.push == 1`: Shows packets where data is pushed immediately (PSH flag).
+       - `tcp.flags.reset == 1`: Shows packets where the connection was reset (RST flag).
+       - `tcp && ip.addr == <IP>`: Shows all TCP packets exchanged with a specific IP.
+       - `http && ip.addr == <IP>`: Shows all HTTP packets exchanged with a specific IP.
+
+• Procedure Summary:
+  1. Open Wireshark and start packet capture on the active network interface.
+  2. Visit a website (e.g., facebook.com or any other HTTP site).
+  3. Stop the capture after a few seconds.
+  4. Apply display filters:
+     - `tcp` → to view TCP packets.
+     - `http` → to view HTTP packets.
+  5. Identify SYN, PSH, and RST packets using:
+     - `tcp.flags.syn == 1`
+     - `tcp.flags.push == 1`
+     - `tcp.flags.reset == 1`
+  6. Observe source/destination IPs, ports, and data flow.
+  7. Count total TCP and HTTP packets sent and received.
+  8. Save the capture file.
+
+• Output:
+  – Successfully captured TCP and HTTP packets using Wireshark.
+  – Observed the connection establishment using SYN and ACK flags.
+  – Identified multiple HTTP request and response packets exchanged between the client and server.
+  – Counted TCP packets containing SYN, PSH, and RST flags.
+  – Verified IP addresses and ports used in the communication.
+
+• Concept Used:
+  – HTTP Protocol (Application Layer)
+  – TCP Protocol (Transport Layer)
+  – TCP Three-Way Handshake
+  – TCP Flags and Packet Filtering
+  – Wireshark Display Filters
+
+• Outcome:
+  – Students learned to capture, analyze, and filter TCP and HTTP packets.
+  – Understood TCP connection flow, HTTP request/response cycle, and flag usage.
+
+• Conclusion:
+  – The experiment was successfully performed.
+  – TCP and HTTP packet exchange was captured and analyzed using Wireshark.
+  – The working of connection establishment, data transfer, and packet filtering was clearly observed.

@@ -1,0 +1,121 @@
+open wireshark
+search amazon
+login
+open wireshark
+search ssl or tls
+find client hello packet just above server hello packet
+right click on it 
+follow
+tls stream
+close pop up
+in search bar add && ssl infromt of that command itself
+analyze 
+
+do the same with server hello packet
+done!!
+
+/////////////////////////
+Assignment No: 10  
+Title: Study of SSL Protocol by Capturing Packets using Wireshark  
+
+• Problem Statement:
+  – To study and analyze the SSL (Secure Sockets Layer) protocol by capturing packets in Wireshark while visiting an SSL-secured website such as a banking or e-commerce site.
+
+• Aim:
+  – To understand the working of SSL/TLS protocol and analyze encrypted communication between a client and server using the Wireshark tool.
+
+• Tools Used:
+  – Wireshark Network Analyzer Tool
+
+• Concept Description:
+
+  1. **SSL (Secure Sockets Layer):**
+     – SSL is an encryption-based Internet security protocol developed by Netscape in 1995.
+     – It ensures **privacy, authentication, and data integrity** in communication between two systems.
+     – SSL has been succeeded by **TLS (Transport Layer Security)**, which is its more secure version.
+     – SSL/TLS encrypts data transmitted across the web, so anyone intercepting the traffic cannot read the actual content.
+
+  2. **How SSL/TLS Works (Handshake Process):**
+     The SSL handshake is the process by which the client (browser) and server establish a secure communication session.
+     The steps are as follows:
+     1. **Client Hello:** The client sends a message to the server with supported encryption algorithms and a random value.
+     2. **Server Hello:** The server responds with the chosen encryption algorithm, its digital certificate (public key), and another random value.
+     3. **Certificate Verification:** The client verifies the server’s digital certificate using a trusted Certificate Authority (CA).
+     4. **Key Exchange:** The client and server generate a session key using asymmetric encryption.
+     5. **Encrypted Data Transfer:** After the handshake, all communication is encrypted using symmetric encryption with the session key.
+
+  3. **Importance of SSL/TLS:**
+     – Encrypts data to ensure confidentiality during transmission.
+     – Authenticates the identity of websites (prevents fake site attacks).
+     – Maintains data integrity by ensuring that transmitted data is not modified.
+     – Protects sensitive user information such as passwords, credit card details, and personal data.
+
+  4. **Ports Used:**
+     – SSL/TLS runs over **TCP port 443** (used for HTTPS websites).
+     – HTTP without SSL runs over port 80.
+
+  5. **Wireshark Filters Used:**
+     – The following display filters are used in Wireshark to analyze SSL traffic:
+       ```
+       tcp.port == 443
+       tls
+       tcp.stream eq 20
+       tcp.stream eq 20 && tls
+       ```
+       **Explanation:**
+       - `tcp.port == 443` → Displays all encrypted HTTPS (SSL/TLS) packets.
+       - `tls` → Filters only packets using the TLS/SSL protocol.
+       - `tcp.stream eq 20` → Displays packets of one specific TCP connection (stream number 20).
+       - `tcp.stream eq 20 && tls` → Displays only SSL/TLS packets within that specific TCP stream, allowing detailed inspection of the handshake process.
+
+  6. **Procedure:**
+     1. Open Wireshark and start packet capture on the active network interface (Wi-Fi or Ethernet).
+     2. Open a browser and visit any HTTPS-secured website such as:
+        – https://www.amazon.in  
+        – https://www.icicibank.com  
+        – https://www.flipkart.com
+     3. Wait for a few seconds while packets are being exchanged between your system and the server.
+     4. Stop packet capture in Wireshark.
+     5. Apply filters:
+        - Use `tcp.port == 443` or `tls` to view SSL/TLS traffic.
+        - Identify packets showing “Client Hello,” “Server Hello,” “Certificate,” and “Application Data.”
+     6. Observe the handshake process (encryption negotiation) and note the exchanged certificates and encrypted data packets.
+     7. Save the capture file.
+
+  7. **Observation:**
+     – Wireshark displays several TLS packets, including:
+       • **Client Hello:** Browser initiates SSL handshake.  
+       • **Server Hello:** Server responds with its SSL certificate.  
+       • **Certificate:** Contains server’s public key and identity details.  
+       • **Change Cipher Spec:** Both sides switch to encrypted communication.  
+       • **Encrypted Application Data:** Actual data exchanged in encrypted form.
+     – The entire process ensures secure end-to-end communication between client and server.
+
+  8. **Advantages of SSL/TLS:**
+     – Provides encryption and prevents data interception.
+     – Authenticates the website’s legitimacy.
+     – Maintains data integrity and confidentiality.
+     – Builds user trust for online services and payments.
+
+  9. **Disadvantages:**
+     – Requires SSL certificates which may have cost.
+     – Slightly slower due to encryption/decryption overhead.
+
+• Output:
+  – Successfully captured and analyzed SSL/TLS packets in Wireshark.
+  – Observed the “Client Hello,” “Server Hello,” “Certificate,” and “Encrypted Data” packets.
+  – Verified that the communication occurred over TCP port 443.
+
+• Concept Used:
+  – SSL/TLS Protocol Architecture
+  – HTTPS Secure Communication
+  – Encryption and Authentication using Certificates
+  – TCP Handshake and Encrypted Data Flow
+
+• Outcome:
+  – Understood how SSL/TLS secures communication between client and server.
+  – Analyzed the SSL handshake and encryption process using Wireshark filters.
+
+• Conclusion:
+  – The SSL/TLS protocol was successfully studied and implemented using Wireshark.
+  – The handshake process a
