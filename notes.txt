@@ -1,0 +1,270 @@
+1. INTRODUCTION- Computer Network: collection of interconnected devices that share resources and exchange data.- 
+Common benefits: resource sharing, communication, centralized data, cost efficiency.- 
+
+Network types: LAN, MAN, WAN.
+
+2. NETWORK DEVICES (WHAT & WHY)- 
+-HUB: Layer 1, broadcasts incoming frames to all ports. Simple, causes collisions.- 
+-SWITCH: Layer 2, uses MAC table to forward frames only to destination port. Reduces collisions.- 
+-ROUTER: Layer 3, forwards packets between different IP networks using routing tables.- 
+-BRIDGE: Connects two LAN segments, operates at Data Link.- 
+-GATEWAY: Connects networks with different protocols (can operate up to application layer).- 
+-ACCESS POINT (AP): Wireless bridge between Wi-Fi devices and wired LAN.- 
+-MODEM: Modulator-demodulator: converts digital<->analog for telephone lines.- 
+-FIREWALL: Filters traffic based on rules, can be hardware/software.
+
+
+3. NETWORK TOPOLOGIES- Physical vs Logical topology.- 
+-Bus: single backbone cable. Terminators at ends. Single failure affects whole network.
+-Star: central switch/hub. Easy expansion, single point of failure is central device.
+-Ring: each node connected to two others; data circulates. Token ring concept.
+-Mesh: every node connected to every other node. High redundancy, costly.
+-Hybrid: combination of above.- Use Packet Tracer to draw and test these.
+
+4. TRANSMISSION MEDIA- 
+- Wired: Twisted Pair (CAT5/CAT6), Coaxial, Fiber Optic.
+- Wireless: Wi-Fi (802.11), Bluetooth, Infrared, Cellular.
+- Characteristics: bandwidth, attenuation, interference, cost.
+
+5. OSI MODEL - 7 LAYERS (ONE-LINER)
+7 Application: user-level services (HTTP, FTP, DNS).
+6 Presentation: data formatting, encryption, compression.
+5 Session: manages sessions (start/stop).
+4 Transport: end-to-end delivery (TCP/UDP).
+3 Network: routing, IP addressing.
+2 Data Link: MAC addressing, framing.
+1 Physical: bits, media, connectors.
+
+6. IP ADDRESSING BASICS- IPv4: 32-bit address, 4 octets (0-255).- Classes:
+  A: 1.0.0.0 - 126.255.255.255 (/8)
+  B: 128.0.0.0 - 191.255.255.255 (/16)
+  C: 192.0.0.0 - 223.255.255.255 (/24)
+  D: 224-239 multicast
+  E: 240-255 experimental- Special: 127.0.0.1 loopback, 169.254.x.x APIPA, private ranges:
+  10.0.0.0/8, 172.16.0.0 - 172.31.255.255, 192.168.0.0/16
+
+7. SUBNETTING & CIDR- CIDR: Classless Inter-Domain Routing. Notation: 192.168.1.0/24- Host bits = 32 - prefix. Usable hosts = 2^(host_bits) - 2- Examples:
+  /24 -> host bits 8 -> 256 total -> 254 usable
+  /26 -> host bits 6 -> 64 total -> 62 usable
+  /30 -> host bits 2 -> 4 total -> 2 usable (point-to-point)- Example: need 300 hosts -> need 302 addresses -> 2^9=512 -> host bits=9 -> prefix=32-9=23 ->
+/23 mask 255.255.254.0- Subnetting steps: choose prefix, calculate mask, network id, broadcast, first/last usable.
+
+8. CIDR CALCULATION QUICK STEPS- Given /prefix: mask in binary has prefix ones then zeros.
+- Convert each 8-bit block to decimal to get dotted mask.
+- Block size = 256 - mask_octet at the first non-255 octet.
+- Subnet ranges increment by block size in that octet.
+
+9. PING and BASIC TROUBLESHOOTING
+- ping <ip/hostname>: sends ICMP echo requests, measures RTT.
+- Common outputs: reply, request timed out, destination host unreachable.
+- Use ipconfig / ifconfig to view local IP, arp 
+-a to see MAC-IP mapping, tracert/traceroute to see path.
+
+10. DNS - DOMAIN NAME SYSTEM
+- Purpose: map human-readable names to IPs and vice versa.
+- Forward lookup: domain -> A (IPv4) or AAAA (IPv6) records.
+- Reverse lookup: IP -> PTR record in in-addr.arpa or ip6.arpa.
+- DNS hierarchy: root -> TLD -> authoritative nameservers -> recursive resolver.
+- Typical tools: nslookup, dig.
+- Python: socket.gethostbyname(host) returns IPv4; gethostbyaddr(ip) returns (hostname, aliases, addrs).
+- C++ legacy: gethostbyname, gethostbyaddr; modern: getaddrinfo/getnameinfo.
+
+11. SOCKET PROGRAMMING 
+- TCP (CONCEPT & CODE)- TCP is connection-oriented, reliable, stream-based, full-duplex.
+- Server steps (Java/C++): socket(), bind(), listen(), accept(), read/write, close()
+- Client steps: socket(), connect(), write/read, close()
+- Java classes: ServerSocket, Socket, InputStreamReader/BufferedReader, PrintWriter.
+- C++: socket(), bind(), listen(), accept(), send()/recv() or read()/write().
+- Two-way chat: both sides maintain input and output streams and loop until exit.
+- Blocking calls: accept() and readLine()/recv() block until data arrives. Use threads or non-blocking
+
+I/O for multi-client servers.
+- TCP handshake: SYN, SYN-ACK, ACK.
+
+12. UDP - QUICK NOTES
+- UDP is connectionless, datagram-based, low overhead, no guarantee of delivery or ordering.
+- Useful for streaming, DNS queries, VoIP, gaming.
+- Java: DatagramSocket and DatagramPacket.
+- C++: sendto()/recvfrom().
+
+13. PACKET TRACER PRACTICALS (SUMMARY)
+- How to simulate topologies: place devices, connect with cables, assign IPs, test with ping.
+-For bus topology, simulate linear connections; for star use switch; for mesh connect all pairs.
+- Practical 3: configure 3 routers with routing protocol (RIP/OSPF/BGP):
+  - RIP: router rip; version 2; network <network>
+  - OSPF: router ospf <id>; network <net> <wildcard> area <area>
+  - Verify: show ip route, ping between hosts.
+
+14. ORAL/VIVA PREP 
+- COMMON QUESTIONS & SHORT ANSWERS
+- What is a socket? -> Software endpoint for network communication (IP+port).
+- Difference IP vs MAC? -> IP is logical network-layer address; MAC is physical data-link address.
+- What does ARP do? -> Resolves IP -> MAC in same LAN.
+- What is NAT? -> Network Address Translation; maps private IPs to public IPs on router.
+- What is DHCP? -> Dynamic Host Configuration Protocol; assigns IPs automatically.
+- What is a gateway? -> Router interface that forwards traffic outside the local network.
+- Why run server first? -> Server must be listening before client connects.
+- What is loopback address? -> 127.0.0.1 used to test TCP/IP stack locally.
+
+16. REFERENCE COMMANDS- Windows: ipconfig, ping, tracert, nslookup, arp -a- Linux: ifconfig or ip addr, ping, traceroute, dig, arp
+17. IMPORTANT FORMULAS- Total addresses in subnet = 2^(32 - prefix)- Usable hosts = 2^(32 - prefix) - 2- Prefix from hosts needed: find smallest n s.t. 2^n - 2 >= required hosts, then prefix = 32 - n
+
+
+
+# Explanations for ALL CN lab-manual concepts (18–22 topics)
+
+1) Network Topologies  
+Topologies define how nodes are interconnected and how data flows in a network.  
+Bus uses a single backbone; failure on the main cable can stop the whole network.  
+Star connects all devices to a central switch, giving high reliability but switch dependency.  
+Mesh provides multiple redundant paths, good for fault tolerance but expensive.  
+Tree/Hybrid mixes different topologies to balance cost and scalability.
+
+2) Transmission Media (Guided & Unguided)  
+Guided media (UTP, STP, Coax, Fiber) use physical cables for signal transmission.  
+Fiber provides highest bandwidth and minimal noise, ideal for backbone links.  
+Unguided media (Wi-Fi, Microwave, Infrared) transmit through air using radio frequencies.  
+Each medium differs in distance support, speed, noise immunity and cost.  
+Choice depends on environment, budget, and performance needs.
+
+3) LAN / WLAN / WAN / Router / Access Point  
+LAN covers small areas with wired Ethernet or Wi-Fi; low latency and high speed.  
+WLAN allows wireless connectivity using APs, enabling mobility but introducing interference.  
+WAN spans cities/countries using leased lines, MPLS, or satellite links.  
+Routers forward packets between networks using routing tables and IP logic.  
+APs connect wireless users to the wired backbone and manage Wi-Fi authentication.
+
+4) Routing Protocols (RIP/OSPF/BGP, focus on RIP)  
+Routing protocols help routers automatically discover paths to networks.  
+RIP uses hop count as metric and broadcasts routing updates every 30 seconds.  
+OSPF uses link-state advertisements and shortest-path (Dijkstra) algorithm.  
+BGP manages routing between ISPs on the global internet using path-vector logic.  
+In labs, RIP is used because it's simple to configure: router rip → network commands.
+
+5) IP Addressing & Default Masks (Class A/B/C)  
+IPv4 is 32-bit and divided into network + host portions.  
+Classes determine default mask: A=255.0.0.0, B=255.255.0.0, C=255.255.255.0.  
+Special ranges include loopback (127.x.x.x), private addresses (10.x, 172.16–31, 192.168.x).  
+Correct addressing ensures proper routing and communication.  
+Gateways must belong to the same network for hosts to reach external networks.
+
+6) Subnetting & Subnet Masks  
+Subnetting divides a large network into smaller logical networks by borrowing host bits.  
+Each subnet has a network ID, broadcast address, and valid host range.  
+Block size = 256 – mask_value, used to calculate subnet boundaries.  
+Helps manage traffic, increase security, and avoid IP wastage.  
+Essential for router configuration, VLANs, and hierarchical addressing.
+
+7) Sockets & Socket Programming  
+Sockets are endpoints for sending/receiving data between two network processes.  
+TCP sockets provide reliable stream communication, while UDP sockets are faster but unreliable.  
+Server performs: socket → bind → listen → accept → communicate.  
+Client performs: socket → connect → communicate → close.  
+Used for applications like chat servers, file transfer, and remote login tools.
+
+8) TCP vs UDP  
+TCP ensures reliable delivery using acknowledgments, retransmissions, and flow control.  
+It establishes a connection via 3-way handshake and guarantees ordered, error-free data.  
+UDP does not guarantee delivery, order, or reliability—making it lightweight.  
+Used for DNS, gaming, VoIP, and streaming where latency matters more than accuracy.  
+Both run on top of IP but serve different application requirements.
+
+9) File Transfer using TCP/UDP  
+TCP makes file transfer easy due to its reliable byte-stream nature.  
+Sender reads file in chunks and sends; receiver reconstructs it sequentially.  
+UDP requires manual handling of lost or out-of-order packets, often using sequence numbers.  
+Used for custom file-sharing tools and multimedia transfer.  
+Testing involves sending text, image, or small video files between client and server.
+
+10) Wireshark Packet Capture Basics  
+Wireshark records live packets and displays detailed protocol information.  
+Capture filters limit packets at capture time; display filters refine after capture.  
+Users analyze TCP handshakes, HTTP requests, ARP frames, DNS queries, etc.  
+Statistics tools show conversations, throughput graphs, and protocol distribution.  
+Used to study attacks, troubleshoot networks, and validate program behavior.
+
+11) HTTP / HTTPS / FTP Concepts  
+HTTP is a stateless protocol for fetching web content using GET/POST requests.  
+HTTPS adds encryption using TLS, securing passwords and sensitive data.  
+FTP uses separate control (port 21) and data channels for file upload/download.  
+Wireshark shows clear HTTP messages but HTTPS content remains encrypted.  
+Useful for analyzing login attempts, website loading behavior, and traffic patterns.
+
+12) TCP Internals (Segment Format, Handshake, Flow Control)  
+TCP segment has header fields like ports, sequence, acknowledgment, window, flags.  
+Handshake: SYN → SYN-ACK → ACK establishes a reliable connection.  
+Flow control uses sliding windows to prevent sender from overwhelming receiver.  
+Congestion control (AIMD, slow-start) adapts speed based on network conditions.  
+Important for understanding reliable transfer and performance behavior.
+
+13) SSL / TLS (Structure & Purpose)  
+TLS encrypts data between client and server using symmetric keys negotiated securely.  
+Handshake includes ClientHello, ServerHello, certificate exchange, key generation.  
+Ensures confidentiality, integrity, and authenticity of data.  
+Used in HTTPS, email security, VPNs and banking apps.  
+In Wireshark, handshake messages are visible but actual data is encrypted.
+
+14) DHCP (Scopes, Leasing, IP Assignment)  
+DHCP automates IP distribution, reducing manual configuration errors.  
+Server defines scope (pool), exclusions, gateway, DNS, and lease time.  
+Client performs: Discover → Offer → Request → Acknowledgment.  
+Ensures efficient address management in large networks like campuses.  
+Packet Tracer simulations verify correct address allocation to multiple devices.
+
+15) DNS (Name Resolution, Zones, Forward/Reverse Lookup)  
+DNS converts user-friendly domain names into numerical IP addresses.  
+Root, TLD, and authoritative servers form a hierarchical lookup structure.  
+Forward lookup resolves name→IP, reverse lookup resolves IP→hostname.  
+Caching improves speed and reduces DNS traffic.  
+Essential for web browsing, email routing, and online services.
+
+16) Packet Analysis Metrics & Reporting  
+Metrics include packet count, bandwidth usage, TCP retransmissions, delays, etc.  
+Flags like SYN/ACK/FIN help identify connection status or attack patterns.  
+IO graphs visualize throughput and congestion over time.  
+Protocol hierarchy shows distribution of HTTP/TCP/ARP/DNS traffic.  
+Used in assignments to generate analysis reports from Wireshark captures.
+
+17) Packet Tracer Configuration Workflow  
+Start by placing end devices, switches, routers, and cables.  
+Assign IP addresses and subnet masks to PCs and router interfaces.  
+Configure routing (static or RIP) and any required services (HTTP, DHCP, FTP).  
+Test connectivity using ping, simulation mode, and packet flow visualization.  
+Save project and document results with screenshots.
+
+18) Common Errors & Troubleshooting  
+Wrong subnet masks cause hosts to be isolated from networks.  
+Incorrect gateway prevents external communication outside local LAN.  
+Wrong cable type or improper interface shutdown states block links.  
+DNS misconfiguration causes websites to fail loading.  
+Wireshark filters typed incorrectly lead to empty or misleading results.
+
+19) TCP Flag Analysis (SYN, ACK, PSH, RST, FIN)  
+SYN initializes a connection; ACK acknowledges received data.  
+PSH asks the receiver to push data to the application immediately.  
+RST terminates a connection abruptly, often due to errors.  
+FIN closes a connection gracefully.  
+Combination of flags helps identify attacks, resets, or abnormal behavior.
+
+20) HTTP Packet Analysis (Requests, Responses, Headers)  
+Inspect request lines (GET/POST), URLs, user-agent, cookies, host headers.  
+Response shows status codes (200 OK, 404 Not Found, 500 Error).  
+Look into content-type, server type, caching rules.  
+Useful for understanding how websites load resources.  
+Captured using filter: http.
+
+21) SSL Packet Analysis  
+Only handshake messages visible—cipher suites, certificate chain, key exchange.  
+No plaintext content visible after handshake.  
+TLS versions (1.0–1.3) differ in handshake steps and security.  
+Used for verifying if connection is encrypted correctly.  
+Filter using: tls or ssl.
+
+22) Client-Server Iterative/Concurrent Models  
+Iterative server handles one client at a time; easy but slow for many clients.  
+Concurrent server uses threads/processes to handle multiple clients simultaneously.  
+TCP multi-client chat servers use concurrent approach.  
+Used for assignments involving multiple connections from several PCs.  
+Shows how real applications scale under load.
+
+# End of expanded 4–6 line explanation set.
